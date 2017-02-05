@@ -24,7 +24,7 @@ ser.flushInput()
 byte, data = 0, ""
 
 def dump(d, prefix=''):
-    print(prefix + ' '.join(x.encode('hex') for x in d))
+    prefix + ' '.join(x.encode('hex') for x in d)
 
 def construct_command(cmd, data=[]):
     assert len(data) <= 12
@@ -48,7 +48,7 @@ def process_data(d):
 def process_version(d):
     r = struct.unpack('<BBBHBB', d[3:])
     checksum = sum(ord(v) for v in d[2:8])%256
-    print("Y: {}, M: {}, D: {}, ID: {}, CRC={}".format(r[0], r[1], r[2], hex(r[3]), "OK" if (checksum==r[4] and r[5]==0xab) else "NOK"))
+    #print("Y: {}, M: {}, D: {}, ID: {}, CRC={}".format(r[0], r[1], r[2], hex(r[3]), "OK" if (checksum==r[4] and r[5]==0xab) else "NOK"))
 
 def read_response():
     byte = 0
@@ -96,9 +96,9 @@ if __name__ == "__main__":
         cmd_set_sleep(0)
         cmd_set_mode(1); # (1) set mode online
         cmd_firmware_ver()
-        time.sleep(20)
+        time.sleep(10)
 
         cmd_query_data();
         cmd_set_mode(0); # (0) set mode offline
         cmd_set_sleep(1) #sleep mode.
-        time.sleep(600) #delay sleep mode.
+        time.sleep(30) #delay sleep mode.
